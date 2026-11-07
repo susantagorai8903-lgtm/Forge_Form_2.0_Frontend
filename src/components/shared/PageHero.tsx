@@ -7,6 +7,7 @@ export function PageHero({
   description,
   image,
   imageAlt,
+  imagePosition = "center",
   action = true,
 }: {
   eyebrow: string;
@@ -14,12 +15,13 @@ export function PageHero({
   description: string;
   image: string;
   imageAlt: string;
+  imagePosition?: React.CSSProperties["objectPosition"];
   action?: boolean;
 }) {
   return (
     <section className="page-hero">
       <div className="page-hero__image">
-        <Image src={image} alt={imageAlt} fill priority sizes="100vw" className="cover-image" />
+        <Image src={image} alt={imageAlt} fill priority sizes="100vw" className="cover-image" style={{ objectPosition: imagePosition }} />
       </div>
       <div className="page-hero__scrim" />
       <div className="page-hero__content shell">

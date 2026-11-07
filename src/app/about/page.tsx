@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="A stronger way forward" title="Built around you." description="A Portland training studio for people who want a little more confidence, consistency, and room to grow." image="/images/h6.jpeg" imageAlt="A team of trainers and members together" />
+      <PageHero eyebrow="A stronger way forward" title="Built around you." description="Get to know our personal approach to strength, movement, and everyday wellness." image="/images/h6.jpeg" imageAlt="A team of trainers and members together" imagePosition="center 20%" />
       <section className="content-section section-light">
         <div className="shell split-story">
           <Reveal className="split-story__image"><Image src="/images/a2.jfif" alt="Members encouraging one another during a workout" fill sizes="(max-width: 800px) 90vw, 45vw" className="cover-image" /></Reveal>
@@ -30,10 +30,16 @@ export default function AboutPage() {
           </Reveal>
         </div>
       </section>
-      <section className="manifesto">
-        <div className="shell manifesto__inner">
-          <p className="eyebrow">Our philosophy</p>
-          <div><h2>Strength is more than lifting heavier. It’s confidence, consistency, mobility, and long-term wellness.</h2><p className="manifesto__text">We make space for the whole picture: where you’re beginning, what you’re working toward, and how training can support the life you want to lead.</p></div>
+      <section className="manifesto manifesto--about">
+        <div className="shell manifesto__inner manifesto__inner--about">
+          <div className="manifesto__copy">
+            <p className="eyebrow">Our philosophy</p>
+            <h2>Strength is more than lifting heavier. It’s confidence, consistency, mobility, and long-term wellness.</h2>
+            <p className="manifesto__text">We make space for the whole picture: where you’re beginning, what you’re working toward, and how training can support the life you want to lead.</p>
+          </div>
+          <div className="manifesto__image">
+            <Image src="/images/h8.jpeg" alt="A coach helping a member during a strength training session" fill sizes="(max-width: 800px) 90vw, 45vw" className="cover-image" />
+          </div>
         </div>
       </section>
       <section className="content-section section-paper">

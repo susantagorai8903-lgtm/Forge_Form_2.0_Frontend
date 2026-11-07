@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowDown, Menu, X } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/shared/Button";
 
 const links = [
@@ -39,10 +40,10 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className={`navbar${scrolled || open ? " navbar--solid" : ""}`}>
+    <header className={`navbar${scrolled || open ? " navbar--solid" : ""}${open ? " navbar--menu-open" : ""}`}>
       <div className="navbar__inner shell">
         <Link href="/" className="brand" aria-label="Forge & Form home">
-          <span className="brand__mark" aria-hidden="true">F<span>&</span>F</span>
+          <Image className="brand__mark" src="/icon/F&F Neon Fitness Emblem.png" alt="" width={760} height={760} priority />
           <span className="brand__name">FORGE <i>&</i> FORM</span>
         </Link>
         <nav className="navbar__links" aria-label="Main navigation">

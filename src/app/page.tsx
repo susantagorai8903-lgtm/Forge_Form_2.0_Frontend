@@ -20,9 +20,9 @@ export default function HomePage() {
         <Image src="/images/a3.jfif" alt="The Forge & Form community training together" fill priority sizes="100vw" className="cover-image home-hero__photo" />
         <div className="home-hero__scrim" />
         <div className="home-hero__content shell">
-          <p className="eyebrow eyebrow--lime"><span className="status-dot" /> Personal training · Portland, Oregon</p>
+          {/* <p className="eyebrow eyebrow--lime"><span className="status-dot" /> Personal training · Portland, Oregon</p> */}
           <h1>Build strength.<br /><span>Shape your future.</span></h1>
-          <p className="home-hero__copy">Personalized training. Expert coaching. Sustainable results. Discover a stronger, healthier version of yourself with Forge & Form.</p>
+          {/**<p className="home-hero__copy">Personalized training. Expert coaching. Sustainable results. Discover a stronger, healthier version of yourself with Forge & Form.</p> */}
           <div className="home-hero__actions">
             <Button href="/book-consultation">Start your journey <ArrowUpRight size={17} /></Button>
             <Link href="/programs" className="button button--ghost">Explore programs <MoveRight size={17} /></Link>

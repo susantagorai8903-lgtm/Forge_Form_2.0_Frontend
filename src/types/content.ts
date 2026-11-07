@@ -5,6 +5,7 @@ export type Program = {
   summary: string;
   description: string;
   image: string;
+  heroImage?: string;
   alt: string;
   benefits: string[];
   suitableFor: string;

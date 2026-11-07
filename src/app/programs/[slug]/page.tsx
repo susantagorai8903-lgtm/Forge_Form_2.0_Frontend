@@ -24,7 +24,7 @@ export default async function ProgramDetailPage({ params }: { params: Promise<{ 
 
   return (
     <>
-      <PageHero eyebrow={program.eyebrow} title={program.title} description={program.summary} image={program.image} imageAlt={program.alt} />
+      <PageHero eyebrow={program.eyebrow} title={program.title} description={program.summary} image={program.heroImage ?? program.image} imageAlt={program.alt} />
       <section className="content-section section-light">
         <div className="shell program-detail__split">
           <div className="program-detail__image"><Image src={program.image} alt={program.alt} fill sizes="(max-width: 800px) 90vw, 52vw" className="cover-image" /></div>

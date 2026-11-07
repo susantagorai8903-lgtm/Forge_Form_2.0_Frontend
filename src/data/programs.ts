@@ -9,6 +9,7 @@ export const programs: Program[] = [
     description:
       "Work alongside a coach to build a thoughtful training routine around your starting point, schedule, and goals. Every session is personal, purposeful, and designed to help you keep showing up.",
     image: "/images/personal%20tranning.jpg",
+    heroImage: "/images/Stronger,%20Healthier,%20Happier%20Workout.png",
     alt: "Coach guiding a client through a personal training session",
     benefits: ["One-to-one coaching", "Personal fitness assessment", "Customized workout plan", "Progress check-ins"],
     suitableFor: "Anyone who values individual attention, whether you are new to training or ready for a fresh challenge.",

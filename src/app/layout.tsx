@@ -27,6 +27,10 @@ export const metadata: Metadata = {
     template: "%s | Forge & Form",
   },
   description: "Personalized strength training, personal coaching, mobility, and wellness at Forge & Form in Portland, Oregon.",
+  icons: {
+    icon: "/icon/F&F Neon Fitness Emblem.png",
+    apple: "/icon/F&F Neon Fitness Emblem.png",
+  },
   openGraph: {
     type: "website",
     siteName: "Forge & Form Personal Training",

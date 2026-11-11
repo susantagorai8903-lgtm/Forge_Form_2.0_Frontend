@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function TrainersPage() {
   return (
     <>
-      <PageHero eyebrow="Your people, your pace" title="Meet your coaches." description="Thoughtful coaching starts with listening. Get to know our sample trainer profiles and connect with us about finding the right fit." image="/images/h6.jpeg" imageAlt="A trainer team gathering in the studio" />
+      <PageHero eyebrow="Your people, your pace" title="Meet your coaches." description="Thoughtful coaching starts with listening. Get to know our sample trainer profiles and connect with us about finding the right fit." image="/images/h6.jpeg" imageAlt="A trainer team gathering in the studio" imagePosition="center top" />
       <section className="content-section section-light">
         <div className="shell">
           <div className="content-section__intro"><p className="eyebrow">Demo team profiles</p><h2 className="page-section-title">Meet the coaches.</h2><p>Trainer names, biographies, and specializations below are demo content. Real staff information and credentials will be confirmed by Forge & Form before publication.</p></div>

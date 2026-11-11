@@ -22,6 +22,7 @@ export const programs: Program[] = [
     description:
       "Develop strength with coached resistance training, functional movements, and a steady approach to progression. We focus on great technique and repeatable habits—not quick fixes.",
     image: "/images/b1.jpeg",
+    heroImagePosition: "center top",
     alt: "Strength training equipment ready for a coached workout",
     benefits: ["Progressive strength work", "Resistance training", "Functional movement practice", "Technique coaching"],
     suitableFor: "Beginners learning the basics, as well as experienced lifters looking for more structure and coaching.",

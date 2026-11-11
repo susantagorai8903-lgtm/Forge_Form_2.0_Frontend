@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 export type Program = {
   slug: string;
   title: string;
@@ -6,6 +8,7 @@ export type Program = {
   description: string;
   image: string;
   heroImage?: string;
+  heroImagePosition?: CSSProperties["objectPosition"];
   alt: string;
   benefits: string[];
   suitableFor: string;

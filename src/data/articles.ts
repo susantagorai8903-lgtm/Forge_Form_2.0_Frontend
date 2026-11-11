@@ -43,7 +43,7 @@ export const articles: Article[] = [
       "Keep the first version simple. When the routine fits your life, it becomes easier to repeat and adjust rather than abandon when a busy week arrives.",
       "Personal coaching can add structure and encouragement while keeping the plan responsive to your needs.",
     ],
-    image: "/images/a2.jfif",
+    image: "/images/a2.jpg",
     alt: "Members supporting each other during a group training session",
     author: "Forge & Form Editorial",
     date: "Wellness notes",

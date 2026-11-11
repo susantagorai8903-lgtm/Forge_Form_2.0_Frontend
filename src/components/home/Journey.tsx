@@ -25,7 +25,7 @@ const steps = [
     number: "03",
     title: "Progress & perspective",
     copy: "We keep track of the work, make adjustments as life changes, and recognize the progress that matters to you.",
-    image: "/images/a1.jfif",
+    image: "/images/a1.jpg",
     alt: "A group of training members moving together",
   },
 ];

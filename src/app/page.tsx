@@ -17,7 +17,7 @@ export default function HomePage() {
   return (
     <>
       <section className="home-hero">
-        <Image src="/images/a3.jfif" alt="The Forge & Form community training together" fill priority sizes="100vw" className="cover-image home-hero__photo" />
+        <Image src="/images/a3.jpg" alt="The Forge & Form community training together" fill priority sizes="100vw" className="cover-image home-hero__photo" />
         <div className="home-hero__scrim" />
         <div className="home-hero__content shell">
           {/* <p className="eyebrow eyebrow--lime"><span className="status-dot" /> Personal training · Portland, Oregon</p> */}

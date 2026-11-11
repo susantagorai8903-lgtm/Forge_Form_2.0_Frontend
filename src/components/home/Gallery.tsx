@@ -8,7 +8,7 @@ import { useGSAP } from "@gsap/react";
 
 const photos = [
   { src: "/images/h4.jpeg", alt: "Strength equipment in a training studio", caption: "Find your strength" },
-  { src: "/images/a2.jfif", alt: "Members supporting one another during training", caption: "Train with purpose" },
+  { src: "/images/a2.jpg", alt: "Members supporting one another during training", caption: "Train with purpose" },
   { src: "/images/h5.jpeg", alt: "A small group training session", caption: "Build consistency" },
   { src: "/images/b3.jpeg", alt: "Movement and fitness outdoors", caption: "Make room to move" },
 ];

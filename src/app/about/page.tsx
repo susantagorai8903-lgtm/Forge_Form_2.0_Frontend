@@ -20,7 +20,7 @@ export default function AboutPage() {
       <PageHero eyebrow="A stronger way forward" title="Built around you." description="Get to know our personal approach to strength, movement, and everyday wellness." image="/images/h6.jpeg" imageAlt="A team of trainers and members together" imagePosition="center 20%" />
       <section className="content-section section-light">
         <div className="shell split-story">
-          <Reveal className="split-story__image"><Image src="/images/a2.jfif" alt="Members encouraging one another during a workout" fill sizes="(max-width: 800px) 90vw, 45vw" className="cover-image" /></Reveal>
+          <Reveal className="split-story__image"><Image src="/images/a2.jpg" alt="Members encouraging one another during a workout" fill sizes="(max-width: 800px) 90vw, 45vw" className="cover-image" /></Reveal>
           <Reveal className="split-story__copy" delay={0.1}>
             <p className="eyebrow">Our story</p>
             <h2>Strength is a starting point.</h2>

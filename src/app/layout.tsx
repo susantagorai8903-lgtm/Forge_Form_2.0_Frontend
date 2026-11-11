@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     siteName: "Forge & Form Personal Training",
     title: "Forge & Form | Personal Training in Portland, Oregon",
     description: "Personalized training. Expert coaching. Sustainable results.",
-    images: [{ url: "/images/a3.jfif", width: 1200, height: 800, alt: "The Forge & Form training community" }],
+    images: [{ url: "/images/a3.jpg", width: 1200, height: 800, alt: "The Forge & Form training community" }],
   },
 };
 

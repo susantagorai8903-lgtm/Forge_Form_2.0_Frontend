@@ -15,7 +15,7 @@ export const trainers: Trainer[] = [
     slug: "morgan-chen",
     name: "Morgan Chen",
     title: "Personal Training Coach",
-    image: "/images/a4.jfif",
+    image: "/images/a4.jpg",
     alt: "Coach speaking with a client during a fitness consultation",
     bio: "Morgan helps clients find a steady, approachable rhythm with training. Demo profile—staff details and credentials will be confirmed by Forge & Form.",
     specialties: ["One-to-one coaching", "Training consistency", "Goal setting"],

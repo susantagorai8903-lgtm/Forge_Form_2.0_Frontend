@@ -30,7 +30,6 @@ export function PageHero({
         <p className="page-hero__description">{description}</p>
         {action && <Button href="/book-consultation" analyticsEvent="consultation_start">Book your free consultation <span aria-hidden="true">↗</span></Button>}
       </div>
-      <span className="page-hero__index" aria-hidden="true">F / F — PORTLAND, OR</span>
     </section>
   );
 }

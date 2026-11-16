@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { MoveUpRight } from "lucide-react";
-import Image from "next/image";
 
 export function Footer() {
   return (
@@ -8,7 +7,6 @@ export function Footer() {
       <div className="footer__top shell">
         <div className="footer__brand">
           <Link href="/" className="brand brand--footer" aria-label="Forge & Form home">
-            <Image className="brand__mark" src="/icon/F&F Neon Fitness Emblem.png" alt="" width={760} height={760} />
             <span className="brand__name">FORGE <i>&</i> FORM</span>
           </Link>
           <p>Personal training for real life. Build strength, find your rhythm, and move forward with a plan made for you.</p>

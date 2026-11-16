@@ -32,7 +32,6 @@ export default function HomePage() {
             <span>SCROLL TO EXPLORE <ArrowDown size={14} /></span>
           </div>
         </div>
-        <span className="home-hero__type" aria-hidden="true">F / F</span>
       </section>
 
       <section className="intro-section section-light">

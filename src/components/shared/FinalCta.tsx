@@ -13,7 +13,6 @@ export function FinalCta() {
           <p>Take the first step toward a stronger, healthier you. We’ll start with a conversation.</p>
           <Button href="/book-consultation" variant="light" analyticsEvent="consultation_start">Book your free consultation <ArrowUpRight size={17} /></Button>
         </div>
-        <span className="final-cta__ornament" aria-hidden="true">F&F</span>
       </div>
     </section>
   );

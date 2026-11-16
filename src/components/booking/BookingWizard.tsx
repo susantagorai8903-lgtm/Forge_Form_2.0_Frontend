@@ -12,6 +12,11 @@ const steps = ["Your details", "Choose a program", "Pick a time", "Your goals", 
 const demoTimes = ["9:00 AM", "12:00 PM", "4:30 PM"];
 const emptyBooking: BookingRequest = { name: "", email: "", phone: "", program: "", date: "", time: "", goals: "", notes: "" };
 
+function getLocalDate(): string {
+  const now = new Date();
+  return new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+}
+
 export function BookingWizard() {
   const [step, setStep] = useState(0);
   const [booking, setBooking] = useState(emptyBooking);
@@ -23,9 +28,7 @@ export function BookingWizard() {
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const now = new Date();
-    const localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
-    setMinimumDate(localDate);
+    setMinimumDate(getLocalDate());
   }, []);
 
   function update<K extends keyof BookingRequest>(key: K, value: BookingRequest[K]) {
@@ -44,7 +47,19 @@ export function BookingWizard() {
       return;
     }
     if (step === 1 && !booking.program) setError("Choose a program to continue.");
-    else if (step === 2 && (!booking.date || !booking.time)) setError("Choose a preferred date and sample time to continue.");
+    else if (step === 2) {
+      const today = getLocalDate();
+      setMinimumDate(today);
+      if (!booking.date || !booking.time) {
+        setError("Choose a preferred date and sample time to continue.");
+        return;
+      }
+      if (booking.date < today) {
+        setError("Choose today or a future date for your consultation request.");
+        return;
+      }
+      setStep((current) => Math.min(current + 1, steps.length - 1));
+    }
     else if (step === 3 && !booking.goals.trim()) setError("Share a little about your goals to continue.");
     else setStep((current) => Math.min(current + 1, steps.length - 1));
   }
@@ -56,13 +71,27 @@ export function BookingWizard() {
 
   async function submit() {
     setError("");
+    const today = getLocalDate();
+    setMinimumDate(today);
+    if (!booking.date || booking.date < today || !booking.time) {
+      setStep(2);
+      setError("Choose today or a future date and a preferred time before sending your request.");
+      return;
+    }
+
     setSubmitting(true);
     try {
       idempotencyKey.current ??= crypto.randomUUID();
       const result = await submitBooking(booking, idempotencyKey.current);
       setConfirmation(result.message || "Your consultation request has been received. The studio will follow up to confirm the details.");
     } catch (submitError) {
-      setError(submitError instanceof ApiError ? submitError.message : "Your request could not be completed. Please try again or contact the studio directly.");
+      if (submitError instanceof ApiError) {
+        const details = Object.entries(submitError.details ?? {})
+          .flatMap(([field, messages]) => messages.map((message) => `${field}: ${message}`));
+        setError([submitError.message, ...details].join(". "));
+      } else {
+        setError("Your request could not be completed. Please try again or contact the studio directly.");
+      }
     } finally {
       setSubmitting(false);
     }
@@ -108,7 +137,7 @@ export function BookingWizard() {
               {step === 2 && <>
                 <h2 id="booking-step-heading">When works for you?</h2><p className="booking-step__lead">Choose a preferred date and sample time. These options are illustrative only—not confirmed availability or studio hours.</p>
                 <div className="form-grid">
-                  <div className="field field--full"><label htmlFor="booking-date">Preferred date *</label><input id="booking-date" name="date" type="date" min={minimumDate} value={booking.date} onChange={(event) => { update("date", event.target.value); update("time", ""); }} /></div>
+                  <div className="field field--full"><label htmlFor="booking-date">Preferred date *</label><input id="booking-date" name="date" type="date" min={minimumDate} value={booking.date} disabled={!minimumDate} onChange={(event) => { update("date", event.target.value); update("time", ""); }} /></div>
                   <div className="field field--full"><span className="field__hint">Sample times (request only)</span><div className="choice-grid">{demoTimes.map((time) => <button type="button" key={time} className={`choice-card${booking.time === time ? " is-selected" : ""}`} aria-pressed={booking.time === time} disabled={!booking.date} onClick={() => update("time", time)}><strong>{time}</strong><span>{booking.date ? "Preferred consultation time" : "Choose a date first"}</span></button>)}</div></div>
                 </div>
               </>}

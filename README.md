@@ -46,7 +46,7 @@ Use `alembic revision --autogenerate -m "description"` to create reviewed migrat
 
 ## Frontend connection
 
-Set `NEXT_PUBLIC_API_BASE_URL` to the backend origin (for example `http://localhost:8000`) and set backend `CORS_ORIGINS` to the exact frontend origin. The contact and booking forms currently send their existing frontend field names. Full API contracts and known integration scope are in [`backend/docs/frontend-integration.md`](./backend/docs/frontend-integration.md).
+Set `NEXT_PUBLIC_API_BASE_URL` to the backend origin only (for example `http://localhost:8000`; do not append `/api/v1`). In Vercel, configure the deployed backend origin and redeploy. Set backend `FRONTEND_URL` to the exact frontend origin and `CORS_ORIGINS` to the approved frontend origins; production must not use `*`. The contact and booking forms currently send their existing frontend field names. Full API contracts and deployment configuration are in [`backend/docs/frontend-integration.md`](./backend/docs/frontend-integration.md).
 
 ## Current implementation boundaries
 

@@ -3,8 +3,8 @@ import { PageHero } from "@/components/shared/PageHero";
 import { BookingWizard } from "@/components/booking/BookingWizard";
 
 export const metadata: Metadata = {
-  title: "Book a Free Consultation",
-  description: "Request a free Forge & Form consultation in Portland. Choose a program and preferred time for the studio to confirm.",
+  title: "Request a Consultation",
+  description: "Request a Forge & Form consultation. Choose a program and preferred time for the studio to confirm.",
 };
 
 export default function BookingPage() {

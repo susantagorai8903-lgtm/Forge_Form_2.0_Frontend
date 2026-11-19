@@ -19,7 +19,7 @@ export default function TermsPage() {
         <h2>Training and wellness</h2>
         <p>Information on this site is not medical advice. Speak with a qualified healthcare professional about health concerns, injuries, or whether an exercise program is appropriate for you.</p>
         <h2>Contact</h2>
-        <p>Questions about these draft terms can be sent to <a className="text-link" href="mailto:training@forgeandform.com">training@forgeandform.com</a>.</p>
+        <p>Questions about these draft terms can be sent through the <a className="text-link" href="/contact">contact form</a>.</p>
       </div>
     </section>
   );

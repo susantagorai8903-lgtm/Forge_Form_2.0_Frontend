@@ -1,14 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Search } from "lucide-react";
-import type { Article } from "@/types/content";
+import type { Article, BlogCategory } from "@/types/content";
+import { ContentImage } from "@/components/shared/ContentImage";
 
-const categories = ["All", "Strength Training", "Nutrition", "Personal Wellness", "Weight Management", "Mobility", "Fitness Tips"];
-
-export function BlogBrowser({ articles }: { articles: Article[] }) {
+export function BlogBrowser({ articles, categories }: { articles: Article[]; categories: BlogCategory[] }) {
   const [category, setCategory] = useState("All");
   const [query, setQuery] = useState("");
   const filtered = useMemo(() => articles.filter((article) => {
@@ -21,7 +19,7 @@ export function BlogBrowser({ articles }: { articles: Article[] }) {
     <>
       <div className="blog-tools">
         <div className="filter-list" aria-label="Filter articles by category">
-          {categories.map((item) => <button className="filter-button" type="button" aria-pressed={category === item} key={item} onClick={() => setCategory(item)}>{item}</button>)}
+          {["All", ...categories.map((item) => item.name)].map((item) => <button className="filter-button" type="button" aria-pressed={category === item} key={item} onClick={() => setCategory(item)}>{item}</button>)}
         </div>
         <label className="blog-search"><Search size={16} aria-hidden="true" /><span className="sr-only">Search articles</span><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search the journal" /></label>
       </div>
@@ -30,7 +28,7 @@ export function BlogBrowser({ articles }: { articles: Article[] }) {
           {filtered.map((article) => (
             <article className="article-card" key={article.slug}>
               <Link href={`/blog/${article.slug}`} aria-label={`Read ${article.title}`}>
-                <div className="article-card__image"><Image src={article.image} alt={article.alt} fill sizes="(max-width: 700px) 90vw, (max-width: 1050px) 45vw, 30vw" className="cover-image" /></div>
+                <div className="article-card__image"><ContentImage src={article.image} alt={article.alt} sizes="(max-width: 700px) 90vw, (max-width: 1050px) 45vw, 30vw" /></div>
               </Link>
               <div className="article-card__meta"><span>{article.category}</span><span>{article.readingTime}</span></div>
               <h2><Link href={`/blog/${article.slug}`}>{article.title}</Link></h2>

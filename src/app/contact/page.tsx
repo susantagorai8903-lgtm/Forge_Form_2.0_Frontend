@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { PageHero } from "@/components/shared/PageHero";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { getLocations, loadContent } from "@/services/content.service";
+import { ContentNotice } from "@/components/shared/ContentNotice";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -9,12 +11,16 @@ export const metadata: Metadata = {
 };
 
 const questions = [
-  ["Is the first consultation free?", "Yes. The consultation is a no-pressure conversation to learn what you are looking for and talk through possible next steps."],
+  ["What happens during a consultation?", "It is a chance to share what you are looking for and discuss possible next steps with the studio."],
   ["Do I need training experience?", "No. We welcome people at different experience levels. Your coach will learn about your starting point and help you explore an appropriate next step."],
   ["Can I ask about a specific program?", "Absolutely. Choose a program in the form or mention your questions in the message, and the studio can follow up."],
 ];
 
-export default function ContactPage() {
+export const revalidate = 300;
+
+export default async function ContactPage() {
+  const locationResult = await loadContent(getLocations());
+  const location = locationResult.items[0];
   return (
     <>
       <PageHero eyebrow="Start with a conversation" title="Let’s talk." description="Questions about training, the studio, or where to begin? Send us a note and we’ll help you find the right next step." image="/images/a4.jpg" imageAlt="A trainer consulting with a prospective client" action={false} />
@@ -23,9 +29,10 @@ export default function ContactPage() {
           <aside className="contact-info">
             <p className="eyebrow">We’re here to help</p><h2>Make the first move.</h2><p>Tell us a little about what you’re looking for. Our team will follow up using your preferred contact method.</p>
             <div className="contact-info__list">
-              <div className="contact-info__item"><Phone size={17} /><span><small>Call the studio</small><a href="tel:+15035550139">(503) 555-0139</a></span></div>
-              <div className="contact-info__item"><Mail size={17} /><span><small>Email</small><a href="mailto:training@forgeandform.com">training@forgeandform.com</a></span></div>
-              <div className="contact-info__item"><MapPin size={17} /><span><small>Visit</small>1900 Division Street<br />Portland, OR 97202</span></div>
+                {location?.phone && <div className="contact-info__item"><Phone size={17} /><span><small>Call the studio</small><a href={`tel:${location.phone}`}>{location.phone}</a></span></div>}
+                {location?.email && <div className="contact-info__item"><Mail size={17} /><span><small>Email</small><a href={`mailto:${location.email}`}>{location.email}</a></span></div>}
+                {location && <div className="contact-info__item"><MapPin size={17} /><span><small>Visit</small>{location.address}<br />{location.city}, {location.state} {location.postal_code}</span></div>}
+                {!location && <ContentNotice message={locationResult.error ? `Studio contact details could not be loaded: ${locationResult.error}` : "Studio contact details are not currently published."} error={Boolean(locationResult.error)} />}
             </div>
           </aside>
           <ContactForm />

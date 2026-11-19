@@ -6,15 +6,20 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import { FinalCta } from "@/components/shared/FinalCta";
 import { TrainerCard } from "@/components/shared/TrainerCard";
 import { Reveal } from "@/components/shared/Reveal";
-import { trainers } from "@/data/trainers";
 import { Button } from "@/components/shared/Button";
+import { getTrainers, loadContent } from "@/services/content.service";
+import { ContentNotice } from "@/components/shared/ContentNotice";
 
 export const metadata: Metadata = {
   title: "About",
   description: "Get to know the Forge & Form approach to personal training, strength, movement, and everyday wellness in Portland.",
 };
 
-export default function AboutPage() {
+export const revalidate = 300;
+
+export default async function AboutPage() {
+  const trainerResult = await loadContent(getTrainers());
+  const trainers = trainerResult.items;
   return (
     <>
       <PageHero eyebrow="A stronger way forward" title="Built around you." description="Get to know our personal approach to strength, movement, and everyday wellness." image="/images/h6.jpeg" imageAlt="A team of trainers and members together" imagePosition="center 20%" />
@@ -25,7 +30,7 @@ export default function AboutPage() {
             <p className="eyebrow">Our story</p>
             <h2>Strength is a starting point.</h2>
             <p>Forge & Form is built around a simple idea: training should help you feel more capable in your everyday life. It can start with one goal, one session, or simply a conversation about what you need.</p>
-            <p>Here, coaching is personal, movement is purposeful, and progress is measured by more than a number. This demo site introduces the brand and its services; studio history and team details are placeholders until confirmed.</p>
+            <p>Here, coaching is personal, movement is purposeful, and progress is measured by more than a number.</p>
             <Button href="/book-consultation" variant="outline">Start a conversation <ArrowUpRight size={16} /></Button>
           </Reveal>
         </div>
@@ -66,8 +71,12 @@ export default function AboutPage() {
       </section>
       <section className="content-section section-paper">
         <div className="shell">
-          <div className="section-topline"><SectionHeading eyebrow="Demo profiles" title="Meet the coaches." /><p className="demo-note" style={{ margin: 0 }}>Sample profiles only; staff details and credentials to be confirmed.</p></div>
-          <div className="trainer-grid">{trainers.map((trainer, index) => <TrainerCard trainer={trainer} index={index} key={trainer.name} />)}</div>
+          <div className="section-topline"><SectionHeading eyebrow="Meet the team" title="Meet the coaches." /></div>
+          {trainerResult.error
+            ? <ContentNotice message={`Trainers could not be loaded: ${trainerResult.error}`} error />
+            : trainers.length
+              ? <div className="trainer-grid">{trainers.map((trainer, index) => <Reveal key={trainer.id ?? trainer.slug} delay={index * .06}><TrainerCard trainer={trainer} index={index} /></Reveal>)}</div>
+              : <ContentNotice message="No trainer profiles are currently available." />}
         </div>
       </section>
       <FinalCta />

@@ -1,0 +1,17 @@
+{
+  "name": "@forge-form/shared",
+  "version": "1.0.0",
+  "private": true,
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "exports": {
+    "./api": "./src/api/client.ts",
+    "./content": "./src/api/content.ts",
+    "./chrome": "./src/components/ZoneChrome.tsx",
+    "./endpoints": "./src/api/endpoints.ts",
+    "./styles.css": "./src/styles/tokens.css",
+    "./types": "./src/types/index.ts",
+    "./validation": "./src/validation/forms.ts"
+  }
+}

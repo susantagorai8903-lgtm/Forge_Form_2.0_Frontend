@@ -1,15 +1,25 @@
 import type { MetadataRoute } from "next";
-import { articles } from "@/data/articles";
-import { trainers } from "@/data/trainers";
+import { getArticles, getPrograms, getTrainers, loadContent } from "@/services/content.service";
 
 const routes = [
-  "", "/about", "/programs", "/programs/personal-training", "/programs/strength-training",
-  "/programs/weight-loss", "/programs/mobility", "/programs/nutrition-guidance", "/trainers",
+  "", "/about", "/programs", "/trainers",
   "/testimonials", "/locations", "/blog", "/contact", "/book-consultation", "/privacy-policy", "/terms",
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const allRoutes = [...routes, ...articles.map((article) => `/blog/${article.slug}`), ...trainers.map((trainer) => `/trainers/${trainer.slug}`)];
+export const revalidate = 300;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [programResult, articleResult, trainerResult] = await Promise.all([
+    loadContent(getPrograms()),
+    loadContent(getArticles()),
+    loadContent(getTrainers()),
+  ]);
+  const allRoutes = [
+    ...routes,
+    ...programResult.items.map((program) => `/programs/${program.slug}`),
+    ...articleResult.items.map((article) => `/blog/${article.slug}`),
+    ...trainerResult.items.map((trainer) => `/trainers/${trainer.slug}`),
+  ];
   return allRoutes.map((route) => ({
     url: `https://forgeandform.com${route}`,
     changeFrequency: "monthly",

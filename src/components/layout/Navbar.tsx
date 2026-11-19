@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowDown, Menu, X } from "lucide-react";
 import { Button } from "@/components/shared/Button";
+import { BrandName } from "@forge-form/shared/chrome";
 
 const links = [
   { label: "About", href: "/about" },
@@ -42,7 +43,7 @@ export function Navbar() {
     <header className={`navbar${scrolled || open ? " navbar--solid" : ""}${open ? " navbar--menu-open" : ""}`}>
       <div className="navbar__inner shell">
         <Link href="/" className="brand" aria-label="Forge & Form home">
-          <span className="brand__name">FORGE <i>&</i> FORM</span>
+          <BrandName className="brand__name" />
         </Link>
         <nav className="navbar__links" aria-label="Main navigation">
           <Link className={pathname === "/" ? "is-active" : ""} href="/">Home</Link>

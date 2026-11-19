@@ -2,23 +2,8 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
+import { getLocations, loadContent } from "@/services/content.service";
 import "./globals.css";
-
-const business = {
-  "@context": "https://schema.org",
-  "@type": "SportsActivityLocation",
-  name: "Forge & Form Personal Training",
-  telephone: "+1-503-555-0139",
-  email: "training@forgeandform.com",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "1900 Division Street",
-    addressLocality: "Portland",
-    addressRegion: "OR",
-    postalCode: "97202",
-    addressCountry: "US",
-  },
-};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://forgeandform.com"),
@@ -36,7 +21,28 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const { items: locations } = await loadContent(getLocations());
+  const location = locations[0];
+  const business = {
+    "@context": "https://schema.org",
+    "@type": "SportsActivityLocation",
+    name: "Forge & Form Personal Training",
+    ...(location?.phone ? { telephone: location.phone } : {}),
+    ...(location?.email ? { email: location.email } : {}),
+    ...(location ? {
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: location.address,
+        addressLocality: location.city,
+        addressRegion: location.state,
+        postalCode: location.postal_code,
+        addressCountry: location.country,
+      },
+    } : {}),
+  };
+  const businessJson = JSON.stringify(business).replace(/</g, "\\u003c");
+
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
@@ -45,7 +51,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SmoothScroll />
         <main id="main-content">{children}</main>
         <Footer />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(business) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: businessJson }} />
       </body>
     </html>
   );

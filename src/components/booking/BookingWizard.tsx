@@ -4,9 +4,10 @@ import { useEffect, useRef, useState, type ChangeEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import { ApiError } from "@/lib/api/client";
-import { programs } from "@/data/programs";
+import { getPrograms } from "@/services/content.service";
 import { submitBooking } from "@/services/booking.service";
 import type { BookingRequest } from "@/types/api";
+import type { Program } from "@/types/content";
 
 const steps = ["Your details", "Choose a program", "Pick a time", "Your goals", "Review"];
 const demoTimes = ["9:00 AM", "12:00 PM", "4:30 PM"];
@@ -18,6 +19,9 @@ function getLocalDate(): string {
 }
 
 export function BookingWizard() {
+  const [programs, setPrograms] = useState<Program[]>([]);
+  const [programsLoading, setProgramsLoading] = useState(true);
+  const [programsError, setProgramsError] = useState("");
   const [step, setStep] = useState(0);
   const [booking, setBooking] = useState(emptyBooking);
   const [error, setError] = useState("");
@@ -31,7 +35,20 @@ export function BookingWizard() {
     setMinimumDate(getLocalDate());
   }, []);
 
+  useEffect(() => {
+    let active = true;
+    getPrograms().then((items) => {
+      if (active) setPrograms(items);
+    }).catch((loadError: unknown) => {
+      if (active) setProgramsError(loadError instanceof ApiError ? loadError.message : "Programs could not be loaded.");
+    }).finally(() => {
+      if (active) setProgramsLoading(false);
+    });
+    return () => { active = false; };
+  }, []);
+
   function update<K extends keyof BookingRequest>(key: K, value: BookingRequest[K]) {
+    idempotencyKey.current = null;
     setBooking((current) => ({ ...current, [key]: value }));
   }
 
@@ -132,7 +149,7 @@ export function BookingWizard() {
               </>}
               {step === 1 && <>
                 <h2 id="booking-step-heading">What would you like to explore?</h2><p className="booking-step__lead">Choose the program that feels closest. You can talk through the details with a coach.</p>
-                <div className="choice-grid">{programs.map((program) => <button type="button" className={`choice-card${booking.program === program.title ? " is-selected" : ""}`} aria-pressed={booking.program === program.title} key={program.slug} onClick={() => update("program", program.title)}><strong>{program.title}</strong><span>{program.summary}</span></button>)}</div>
+                {programsLoading ? <p role="status">Loading available programs…</p> : programsError ? <p className="form-message" role="alert">{programsError}</p> : programs.length === 0 ? <p className="empty-state" role="status">No programs are currently available. Please contact the studio directly.</p> : <div className="choice-grid">{programs.map((program) => <button type="button" className={`choice-card${booking.program === program.slug ? " is-selected" : ""}`} aria-pressed={booking.program === program.slug} key={program.slug} onClick={() => update("program", program.slug)}><strong>{program.title}</strong><span>{program.summary}</span></button>)}</div>}
               </>}
               {step === 2 && <>
                 <h2 id="booking-step-heading">When works for you?</h2><p className="booking-step__lead">Choose a preferred date and sample time. These options are illustrative only—not confirmed availability or studio hours.</p>
@@ -152,7 +169,7 @@ export function BookingWizard() {
                 <h2 id="booking-step-heading">Review your request.</h2><p className="booking-step__lead">Check the details before sending. Your consultation is not booked until the studio confirms it.</p>
                 <ul className="benefit-list">
                   <li><Check size={15} />{booking.name} · {booking.email} · {booking.phone}</li>
-                  <li><Check size={15} />{booking.program}</li>
+                  <li><Check size={15} />{programs.find((program) => program.slug === booking.program)?.title ?? booking.program}</li>
                   <li><Check size={15} />{booking.date} · {booking.time} (preferred, unconfirmed)</li>
                   <li><Check size={15} />{booking.goals}</li>
                 </ul>

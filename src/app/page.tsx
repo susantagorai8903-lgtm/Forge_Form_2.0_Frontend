@@ -1,9 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight, MapPin, MoveRight } from "lucide-react";
-import { programs } from "@/data/programs";
-import { trainers } from "@/data/trainers";
-import { testimonials } from "@/data/testimonials";
+import { getLocations, getPrograms, getTestimonials, getTrainers, loadContent } from "@/services/content.service";
 import { Button } from "@/components/shared/Button";
 import { FinalCta } from "@/components/shared/FinalCta";
 import { ProgramCard } from "@/components/shared/ProgramCard";
@@ -12,8 +10,23 @@ import { TrainerCard } from "@/components/shared/TrainerCard";
 import { Reveal } from "@/components/shared/Reveal";
 import { Journey } from "@/components/home/Journey";
 import { Gallery } from "@/components/home/Gallery";
+import { ContentNotice } from "@/components/shared/ContentNotice";
+import { ContentImage } from "@/components/shared/ContentImage";
 
-export default function HomePage() {
+export const revalidate = 300;
+
+export default async function HomePage() {
+  const [programResult, trainerResult, testimonialResult, locationResult] = await Promise.all([
+    loadContent(getPrograms()),
+    loadContent(getTrainers()),
+    loadContent(getTestimonials()),
+    loadContent(getLocations()),
+  ]);
+  const programs = programResult.items;
+  const trainers = trainerResult.items;
+  const testimonials = testimonialResult.items;
+  const location = locationResult.items[0];
+
   return (
     <>
       <section className="home-hero">
@@ -60,9 +73,11 @@ export default function HomePage() {
             <SectionHeading eyebrow="Find your focus" title="Training with purpose." />
             <Link className="text-link" href="/programs">Explore all programs <MoveRight size={16} /></Link>
           </div>
-          <div className="program-grid">
-            {programs.map((program, index) => <Reveal key={program.slug} delay={index * 0.06}><ProgramCard program={program} index={index} /></Reveal>)}
-          </div>
+          {programResult.error
+            ? <ContentNotice message={`Programs could not be loaded: ${programResult.error}`} error />
+            : programs.length
+              ? <div className="program-grid">{programs.map((program, index) => <Reveal key={program.slug} delay={index * 0.06}><ProgramCard program={program} index={index} /></Reveal>)}</div>
+              : <ContentNotice message="No programs are currently available." />}
         </div>
       </section>
 
@@ -92,8 +107,11 @@ export default function HomePage() {
             <SectionHeading eyebrow="Good people, thoughtful coaching" title="Meet your coaches." />
             <Link className="text-link" href="/trainers">Meet the team <MoveRight size={16} /></Link>
           </div>
-          <p className="demo-note">Sample profiles for design preview. Staff details and credentials will be confirmed before launch.</p>
-          <div className="trainer-grid">{trainers.map((trainer, index) => <Reveal key={trainer.name} delay={index * 0.08}><TrainerCard trainer={trainer} index={index} /></Reveal>)}</div>
+          {trainerResult.error
+            ? <ContentNotice message={`Trainers could not be loaded: ${trainerResult.error}`} error />
+            : trainers.length
+              ? <div className="trainer-grid">{trainers.map((trainer, index) => <Reveal key={trainer.id ?? trainer.slug} delay={index * 0.08}><TrainerCard trainer={trainer} index={index} /></Reveal>)}</div>
+              : <ContentNotice message="No trainer profiles are currently available." />}
         </div>
       </section>
 
@@ -103,13 +121,16 @@ export default function HomePage() {
             <SectionHeading eyebrow="Stories in progress" title="Every journey is personal." light />
             <Link className="text-link text-link--light" href="/testimonials">Explore client stories <MoveRight size={16} /></Link>
           </div>
-          <p className="demo-note demo-note--light">The cards below are sample layouts, not verified customer reviews.</p>
-          <div className="story-grid">{testimonials.slice(0, 3).map((story, index) => (
+          {testimonialResult.error
+            ? <ContentNotice message={`Client stories could not be loaded: ${testimonialResult.error}`} error />
+            : testimonials.length
+              ? <div className="story-grid">{testimonials.slice(0, 3).map((story, index) => (
             <article className="story-card" key={story.name}>
-              <div className="story-card__image"><Image src={story.image} alt="Placeholder image for a demo client story" fill sizes="(max-width: 700px) 90vw, 30vw" className="cover-image" /></div>
-              <div className="story-card__body"><span className="eyebrow eyebrow--lime">DEMO STORY / 0{index + 1}</span><blockquote>“{story.quote}”</blockquote><span className="story-card__name">{story.name}</span></div>
+              <div className="story-card__image"><ContentImage src={story.image} alt={`Photo shared by ${story.name}`} sizes="(max-width: 700px) 90vw, 30vw" /></div>
+              <div className="story-card__body"><span className="eyebrow eyebrow--lime">CLIENT STORY / {String(index + 1).padStart(2, "0")}</span><blockquote>“{story.quote}”</blockquote><span className="story-card__name">{story.name}</span></div>
             </article>
-          ))}</div>
+              ))}</div>
+              : <ContentNotice message="No client stories have been published." />}
         </div>
       </section>
 
@@ -119,9 +140,11 @@ export default function HomePage() {
         <div className="shell contact-strip__inner">
           <div><p className="eyebrow">Come say hello</p><h2>A good place to begin<br />is a conversation.</h2></div>
           <div className="contact-strip__details">
-            <p><MapPin size={17} /><span>1900 Division Street<br />Portland, OR 97202</span></p>
-            <a href="tel:+15035550139">(503) 555-0139 <ArrowUpRight size={14} /></a>
-            <a href="mailto:training@forgeandform.com">training@forgeandform.com <ArrowUpRight size={14} /></a>
+            {location ? <>
+              <p><MapPin size={17} /><span>{location.address}<br />{location.city}, {location.state} {location.postal_code}</span></p>
+              {location.phone && <a href={`tel:${location.phone}`}>{location.phone} <ArrowUpRight size={14} /></a>}
+              {location.email && <a href={`mailto:${location.email}`}>{location.email} <ArrowUpRight size={14} /></a>}
+            </> : <ContentNotice message={locationResult.error ? `Studio details could not be loaded: ${locationResult.error}` : "Studio contact details are not currently published."} error={Boolean(locationResult.error)} />}
             <Link href="/locations" className="text-link">Get directions <MoveRight size={16} /></Link>
           </div>
         </div>

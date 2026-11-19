@@ -11,7 +11,7 @@ export function FinalCta() {
         </div>
         <div className="final-cta__action">
           <p>Take the first step toward a stronger, healthier you. We’ll start with a conversation.</p>
-          <Button href="/book-consultation" variant="light" analyticsEvent="consultation_start">Book your free consultation <ArrowUpRight size={17} /></Button>
+          <Button href="/book-consultation" variant="light" analyticsEvent="consultation_start">Request a consultation <ArrowUpRight size={17} /></Button>
         </div>
       </div>
     </section>

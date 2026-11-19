@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
         <h2>Service providers and analytics</h2>
         <p>Hosting, analytics, cookies, and other third-party services have not been configured or verified in this demo. Add accurate information here after selecting and reviewing those services.</p>
         <h2>Your choices and questions</h2>
-        <p>For privacy questions, contact <a className="text-link" href="mailto:training@forgeandform.com">training@forgeandform.com</a>. Replace this template with a reviewed policy before collecting personal information in production.</p>
+        <p>For privacy questions, use the <a className="text-link" href="/contact">contact form</a>. Replace this template with a reviewed policy before collecting personal information in production.</p>
       </div>
     </section>
   );

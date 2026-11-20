@@ -9,10 +9,16 @@ import { Reveal } from "@/components/shared/Reveal";
 import { Button } from "@/components/shared/Button";
 import { getTrainers, loadContent } from "@/services/content.service";
 import { ContentNotice } from "@/components/shared/ContentNotice";
+import { StudioAmenities } from "@/components/shared/StudioAmenities";
 
 export const metadata: Metadata = {
   title: "About",
   description: "Get to know the Forge & Form approach to personal training, strength, movement, and everyday wellness in Portland.",
+  openGraph: {
+    title: "About Forge & Form | Personal Training in Portland",
+    description: "Meet the coaching approach and studio behind Forge & Form in Portland, Oregon.",
+    images: [{ url: "/images/a3.jpg", width: 1200, height: 800, alt: "The Forge & Form training community" }],
+  },
 };
 
 export const revalidate = 300;
@@ -72,6 +78,7 @@ export default async function AboutPage() {
       <section className="content-section section-paper">
         <div className="shell">
           <div className="section-topline"><SectionHeading eyebrow="Meet the team" title="Meet the coaches." /></div>
+          {trainers.some((trainer) => trainer.isSample) && <p className="demo-note">Sample coach profiles and credentials—verify details before publication.</p>}
           {trainerResult.error
             ? <ContentNotice message={`Trainers could not be loaded: ${trainerResult.error}`} error />
             : trainers.length
@@ -79,6 +86,7 @@ export default async function AboutPage() {
               : <ContentNotice message="No trainer profiles are currently available." />}
         </div>
       </section>
+      <StudioAmenities />
       <FinalCta />
     </>
   );

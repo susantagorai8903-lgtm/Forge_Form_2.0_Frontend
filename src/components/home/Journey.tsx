@@ -11,7 +11,7 @@ const steps = [
     number: "01",
     title: "Fitness assessment",
     copy: "We begin with a real conversation about your goals, current routine, and what you want from training.",
-    image: "/images/fitness%20assesment.jpg",
+    image: "/images/fitness-assessment.jpg",
     alt: "Coach discussing fitness goals with a client",
   },
   {

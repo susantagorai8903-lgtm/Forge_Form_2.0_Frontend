@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
-import { getLocations, loadContent } from "@/services/content.service";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,29 +16,37 @@ export const metadata: Metadata = {
     siteName: "Forge & Form Personal Training",
     title: "Forge & Form | Personal Training in Portland, Oregon",
     description: "Personalized training. Expert coaching. Sustainable results.",
+    url: "https://forgeandform.com",
     images: [{ url: "/images/a3.jpg", width: 1200, height: 800, alt: "The Forge & Form training community" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Forge & Form | Personal Training in Portland, Oregon",
+    description: "Personalized training. Expert coaching. Sustainable results in Portland, Oregon.",
+    images: ["/images/a3.jpg"],
   },
 };
 
-export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const { items: locations } = await loadContent(getLocations());
-  const location = locations[0];
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const business = {
     "@context": "https://schema.org",
-    "@type": "SportsActivityLocation",
-    name: "Forge & Form Personal Training",
-    ...(location?.phone ? { telephone: location.phone } : {}),
-    ...(location?.email ? { email: location.email } : {}),
-    ...(location ? {
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: location.address,
-        addressLocality: location.city,
-        addressRegion: location.state,
-        postalCode: location.postal_code,
-        addressCountry: location.country,
-      },
-    } : {}),
+    "@type": ["HealthAndBeautyBusiness", "LocalBusiness"],
+    name: "Forge & Form",
+    description: "Personalized strength training, personal coaching, mobility, and wellness in Portland, Oregon.",
+    url: "https://forgeandform.com",
+    image: "https://forgeandform.com/images/a3.jpg",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "1900 SE Division Street",
+      addressLocality: "Portland",
+      addressRegion: "OR",
+      postalCode: "97202",
+      addressCountry: "US",
+    },
+    areaServed: {
+      "@type": "City",
+      name: "Portland",
+    },
   };
   const businessJson = JSON.stringify(business).replace(/</g, "\\u003c");
 

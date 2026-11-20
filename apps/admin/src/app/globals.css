@@ -41,5 +41,5 @@ pre { max-width: 100%; overflow: auto; padding: 14px; background: #f1f0eb; font-
 @media (max-width: 760px) {
   .zone-header, .zone-footer { align-items: flex-start; flex-direction: column; }
   .zone-header nav, .zone-footer nav { gap: 14px; }
-  .login-page, .resource-layout { grid-template-columns: 1fr; }
+  .login-page, .resource-layout { grid-template-columns: minmax(0, 1fr); }
 }

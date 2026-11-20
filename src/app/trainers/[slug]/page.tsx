@@ -12,7 +12,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   try {
     const trainer = await getTrainer(slug);
-    return { title: trainer.name, description: `${trainer.title} at Forge & Form Personal Training.` };
+    const description = `${trainer.title} at Forge & Form Personal Training.`;
+    return {
+      title: trainer.name,
+      description,
+      openGraph: {
+        title: `${trainer.name} | Forge & Form`,
+        description,
+        images: [{ url: trainer.image, alt: trainer.alt }],
+      },
+    };
   } catch (error) {
     if (error instanceof ApiError) return {};
     throw error;
@@ -39,12 +48,18 @@ export default async function TrainerProfilePage({ params }: { params: Promise<{
             <div className="trainer-profile__image"><ContentImage src={trainer.image} alt={trainer.alt} priority sizes="(max-width: 800px) 90vw, 45vw" /></div>
             <div className="trainer-profile__body">
               <p className="eyebrow">Meet your coach</p>
+              {trainer.isSample && <p className="demo-note">Sample coach profile—verify credentials and details before publication.</p>}
               <h1 className="page-section-title">{trainer.name}</h1>
               <p className="trainer-profile__title">{trainer.title}</p>
               <p>{trainer.bio}</p>
+              {trainer.quote && <blockquote className="trainer-profile__quote">“{trainer.quote}”</blockquote>}
               <p className="trainer-profile__experience">{trainer.experience}</p>
               <h2>Coaching focus</h2>
               <ul className="benefit-list">{trainer.specialties.map((specialty) => <li key={specialty}><Check size={15} />{specialty}</li>)}</ul>
+              {trainer.certifications && trainer.certifications.length > 0 && <>
+                <h2>Certifications</h2>
+                <ul className="benefit-list">{trainer.certifications.map((certification) => <li key={certification}><Check size={15} />{certification}</li>)}</ul>
+              </>}
               <Button href="/book-consultation">Talk with a coach <ArrowUpRight size={16} /></Button>
             </div>
           </div>

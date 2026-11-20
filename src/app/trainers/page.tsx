@@ -9,6 +9,11 @@ import { ContentNotice } from "@/components/shared/ContentNotice";
 export const metadata: Metadata = {
   title: "Meet the Trainers",
   description: "Meet the Forge & Form coaching team and explore personal training in Portland, Oregon.",
+  openGraph: {
+    title: "Meet the Forge & Form Coaches | Portland",
+    description: "Learn about the coaches and personal training approach at Forge & Form.",
+    images: [{ url: "/images/a3.jpg", width: 1200, height: 800, alt: "The Forge & Form training community" }],
+  },
 };
 
 export const revalidate = 300;
@@ -32,7 +37,7 @@ export default async function TrainersPage() {
           {errorMessage
             ? <ContentNotice message={`Trainers could not be loaded: ${errorMessage}`} error />
             : trainers.length
-              ? <div className="trainer-grid">{trainers.map((trainer, index) => <TrainerCard trainer={trainer} index={index} key={trainer.id ?? trainer.slug} />)}</div>
+              ? <>{trainers.some((trainer) => trainer.isSample) && <p className="demo-note">Sample coach profiles and credentials—verify details before publication.</p>}<div className="trainer-grid">{trainers.map((trainer, index) => <TrainerCard trainer={trainer} index={index} key={trainer.id ?? trainer.slug} />)}</div></>
               : <ContentNotice message="No trainer profiles are currently available." />}
         </div>
       </section>

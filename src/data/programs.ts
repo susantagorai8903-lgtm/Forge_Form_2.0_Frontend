@@ -2,21 +2,19 @@ import type { Program } from "@/types/content";
 
 export const programs: Program[] = [
   {
-    isSample: true,
     slug: "personal-training",
     title: "Personal Training",
     eyebrow: "One-on-one coaching",
     summary: "A plan built around your life, your goals, and the way you want to feel.",
     description:
       "Work alongside a coach to build a thoughtful training routine around your starting point, schedule, and goals. Every session is personal, purposeful, and designed to help you keep showing up.",
-    image: "/images/personal-training.jpg",
-    heroImage: "/images/personal-training-hero.png",
+    image: "/images/personal%20tranning.jpg",
+    heroImage: "/images/Stronger,%20Healthier,%20Happier%20Workout.png",
     alt: "Coach guiding a client through a personal training session",
     benefits: ["One-to-one coaching", "Personal fitness assessment", "Customized workout plan", "Progress check-ins"],
     suitableFor: "Anyone who values individual attention, whether you are new to training or ready for a fresh challenge.",
   },
   {
-    isSample: true,
     slug: "strength-training",
     title: "Strength Training",
     eyebrow: "Build a stronger foundation",
@@ -30,7 +28,6 @@ export const programs: Program[] = [
     suitableFor: "Beginners learning the basics, as well as experienced lifters looking for more structure and coaching.",
   },
   {
-    isSample: true,
     slug: "weight-loss",
     title: "Weight Loss Coaching",
     eyebrow: "Sustainable by design",
@@ -43,7 +40,6 @@ export const programs: Program[] = [
     suitableFor: "People who want a supportive, practical approach to movement and long-term lifestyle change.",
   },
   {
-    isSample: true,
     slug: "mobility",
     title: "Mobility & Flexibility",
     eyebrow: "Move with more ease",
@@ -56,14 +52,13 @@ export const programs: Program[] = [
     suitableFor: "Anyone who wants to give mobility and movement quality a more consistent place in their routine.",
   },
   {
-    isSample: true,
     slug: "nutrition-guidance",
     title: "Nutrition Guidance",
     eyebrow: "Everyday wellness",
     summary: "Practical, general education to help make food choices feel more approachable.",
     description:
       "Get general nutrition education and lifestyle guidance that supports your training goals. We keep it practical, non-prescriptive, and grounded in sustainable everyday habits.",
-    image: "/images/nutrition-guidance.jpg",
+    image: "/images/nutrition%20guidance.jpg",
     alt: "Fresh ingredients prepared for a balanced meal",
     benefits: ["General nutrition education", "Goal-oriented lifestyle support", "Habit-building ideas", "Coaching alongside your training"],
     suitableFor: "People looking for practical context and supportive habits to complement an active lifestyle.",

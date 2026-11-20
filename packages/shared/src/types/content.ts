@@ -1,6 +1,5 @@
 export type Program = {
   id?: string;
-  isSample?: boolean;
   slug: string;
   title: string;
   eyebrow: string;
@@ -22,7 +21,6 @@ export type ProgramCategory = {
 
 export type Trainer = {
   id?: string;
-  isSample?: boolean;
   slug: string;
   name: string;
   title: string;
@@ -31,13 +29,10 @@ export type Trainer = {
   bio: string;
   specialties: string[];
   experience: string;
-  quote?: string;
-  certifications?: string[];
 };
 
 export type Article = {
   id?: string;
-  isSample?: boolean;
   slug: string;
   title: string;
   category: string;
@@ -54,18 +49,13 @@ export type BlogCategory = ProgramCategory;
 
 export type Testimonial = {
   id?: string;
-  isSample?: boolean;
   name: string;
   quote: string;
   image: string;
-  milestone?: string;
-  programType?: string;
-  duration?: string;
 };
 
 export type Location = {
   id: string;
-  isSample?: boolean;
   name: string;
   address: string;
   city: string;

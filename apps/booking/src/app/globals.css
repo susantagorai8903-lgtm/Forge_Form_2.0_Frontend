@@ -46,6 +46,6 @@ textarea { min-height: 100px; resize: vertical; }
 @media (max-width: 760px) {
   .zone-header, .zone-footer { align-items: flex-start; flex-direction: column; }
   .zone-header nav, .zone-footer nav { gap: 14px; }
-  .booking-page { grid-template-columns: minmax(0, 1fr); }
+  .booking-page { grid-template-columns: 1fr; }
   .booking-intro { position: static; }
 }

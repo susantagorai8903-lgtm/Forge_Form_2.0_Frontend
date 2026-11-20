@@ -12,15 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   try {
     const article = await getArticle(slug);
-    return {
-      title: article.title,
-      description: article.excerpt,
-      openGraph: {
-        title: article.title,
-        description: article.excerpt,
-        images: [{ url: article.image, alt: article.alt }],
-      },
-    };
+    return { title: article.title, description: article.excerpt, openGraph: article.image ? { images: [article.image] } : undefined };
   } catch (error) {
     if (error instanceof ApiError) return {};
     throw error;
@@ -45,7 +37,6 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <Link className="text-link" href="/blog"><ArrowLeft size={14} /> Back to the journal</Link>
           <p className="article-body__meta" style={{ marginTop: 32 }}>{[article.category, article.readingTime, article.author, article.date].filter(Boolean).join(" · ")}</p>
           <h1>{article.title}</h1>
-          {article.isSample && <p className="demo-note">Sample editorial content for preview—review and approve before publication.</p>}
           <p className="section-heading__copy">{article.excerpt}</p>
           {article.image && <div className="article-body__image"><ContentImage src={article.image} alt={article.alt} priority sizes="(max-width: 800px) 90vw, 760px" /></div>}
           {article.content.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}

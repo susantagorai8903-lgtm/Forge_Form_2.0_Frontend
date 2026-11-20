@@ -76,7 +76,7 @@ export default async function HomePage() {
           {programResult.error
             ? <ContentNotice message={`Programs could not be loaded: ${programResult.error}`} error />
             : programs.length
-              ? <>{programs.some((program) => program.isSample) && <p className="demo-note">Sample program content—confirm services and availability before publication.</p>}<div className="program-grid">{programs.map((program, index) => <Reveal key={program.slug} delay={index * 0.06}><ProgramCard program={program} index={index} /></Reveal>)}</div></>
+              ? <div className="program-grid">{programs.map((program, index) => <Reveal key={program.slug} delay={index * 0.06}><ProgramCard program={program} index={index} /></Reveal>)}</div>
               : <ContentNotice message="No programs are currently available." />}
         </div>
       </section>
@@ -110,7 +110,7 @@ export default async function HomePage() {
           {trainerResult.error
             ? <ContentNotice message={`Trainers could not be loaded: ${trainerResult.error}`} error />
             : trainers.length
-              ? <>{trainers.some((trainer) => trainer.isSample) && <p className="demo-note">Sample coach profiles and credentials—verify details before publication.</p>}<div className="trainer-grid">{trainers.map((trainer, index) => <Reveal key={trainer.id ?? trainer.slug} delay={index * 0.08}><TrainerCard trainer={trainer} index={index} /></Reveal>)}</div></>
+              ? <div className="trainer-grid">{trainers.map((trainer, index) => <Reveal key={trainer.id ?? trainer.slug} delay={index * 0.08}><TrainerCard trainer={trainer} index={index} /></Reveal>)}</div>
               : <ContentNotice message="No trainer profiles are currently available." />}
         </div>
       </section>
@@ -124,13 +124,12 @@ export default async function HomePage() {
           {testimonialResult.error
             ? <ContentNotice message={`Client stories could not be loaded: ${testimonialResult.error}`} error />
             : testimonials.length
-              ? <>{testimonials.some((story) => story.isSample) && <p className="demo-note demo-note--light">Illustrative sample stories, not verified client testimonials.</p>}<div className="story-grid">{testimonials.slice(0, 3).map((story, index) => (
+              ? <div className="story-grid">{testimonials.slice(0, 3).map((story, index) => (
             <article className="story-card" key={story.name}>
-              <div className="story-card__image"><ContentImage src={story.image} alt={story.isSample ? `Illustrative portrait for the sample story featuring ${story.name}` : `Photo shared by ${story.name}`} sizes="(max-width: 700px) 90vw, 30vw" /></div>
-              <div className="story-card__body"><span className="eyebrow eyebrow--lime">CLIENT STORY / {String(index + 1).padStart(2, "0")}</span><blockquote>“{story.quote}”</blockquote><span className="story-card__name">{story.name}</span>{story.milestone && <p className="story-card__milestone">{story.milestone}</p>}{story.programType && story.duration && <p className="story-card__meta">{story.programType} · {story.duration}</p>}</div>
+              <div className="story-card__image"><ContentImage src={story.image} alt={`Photo shared by ${story.name}`} sizes="(max-width: 700px) 90vw, 30vw" /></div>
+              <div className="story-card__body"><span className="eyebrow eyebrow--lime">CLIENT STORY / {String(index + 1).padStart(2, "0")}</span><blockquote>“{story.quote}”</blockquote><span className="story-card__name">{story.name}</span></div>
             </article>
               ))}</div>
-              </>
               : <ContentNotice message="No client stories have been published." />}
         </div>
       </section>
@@ -143,7 +142,6 @@ export default async function HomePage() {
           <div className="contact-strip__details">
             {location ? <>
               <p><MapPin size={17} /><span>{location.address}<br />{location.city}, {location.state} {location.postal_code}</span></p>
-              {location.isSample && <span className="demo-note" role="note">Sample studio listing—confirm contact details and hours before publication.</span>}
               {location.phone && <a href={`tel:${location.phone}`}>{location.phone} <ArrowUpRight size={14} /></a>}
               {location.email && <a href={`mailto:${location.email}`}>{location.email} <ArrowUpRight size={14} /></a>}
             </> : <ContentNotice message={locationResult.error ? `Studio details could not be loaded: ${locationResult.error}` : "Studio contact details are not currently published."} error={Boolean(locationResult.error)} />}

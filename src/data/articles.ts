@@ -59,7 +59,7 @@ export const articles: Article[] = [
       "General education can be helpful, but it is not medical or individualized nutrition care. For a health condition or specific dietary needs, speak with a registered dietitian or another qualified professional.",
       "At Forge & Form, general nutrition guidance is intended to complement training and support informed, everyday choices.",
     ],
-    image: "/images/nutrition-guidance.jpg",
+    image: "/images/nutrition%20guidance.jpg",
     alt: "Ingredients for an everyday nutritious meal",
     author: "Forge & Form Editorial",
     date: "Wellness notes",

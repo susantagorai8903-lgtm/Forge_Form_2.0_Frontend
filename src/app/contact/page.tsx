@@ -23,7 +23,7 @@ export default async function ContactPage() {
   const location = locationResult.items[0];
   return (
     <>
-      <PageHero eyebrow="Start with a conversation" title="Let’s talk." description="Questions about training, the studio, or where to begin? Send us a note and we’ll help you find the right next step." image="/images/a4.jpg" imageAlt="A trainer consulting with a prospective client" imagePosition="center 20%" action={false} />
+      <PageHero eyebrow="Start with a conversation" title="Let’s talk." description="Questions about training, the studio, or where to begin? Send us a note and we’ll help you find the right next step." image="/images/a4.jpg" imageAlt="A trainer consulting with a prospective client" action={false} />
       <section className="content-section section-light">
         <div className="shell contact-layout">
           <aside className="contact-info">

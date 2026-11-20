@@ -4,16 +4,10 @@ import { Button } from "@/components/shared/Button";
 import { PageHero } from "@/components/shared/PageHero";
 import { getLocations, loadContent } from "@/services/content.service";
 import { ContentNotice } from "@/components/shared/ContentNotice";
-import { StudioAmenities } from "@/components/shared/StudioAmenities";
 
 export const metadata: Metadata = {
   title: "Our Location",
   description: "Find Forge & Form Personal Training locations and contact details.",
-  openGraph: {
-    title: "Forge & Form Studio Location | Portland, Oregon",
-    description: "Find the Forge & Form studio at 1900 SE Division Street in Portland, Oregon.",
-    images: [{ url: "/images/a3.jpg", width: 1200, height: 800, alt: "The Forge & Form training community" }],
-  },
 };
 
 export const revalidate = 300;
@@ -36,7 +30,6 @@ export default async function LocationsPage() {
                 const hours = location.opening_hours ? Object.entries(location.opening_hours) : [];
                 return <article className="location-details" key={location.id}>
                   <p className="eyebrow eyebrow--lime">Forge & Form Personal Training</p>
-                  {location.isSample && <p className="demo-note demo-note--light">Sample studio listing—confirm contact details and hours before publication.</p>}
                   <h2>{location.name}</h2>
                   <address>{location.address}<br />{location.city}, {location.state} {location.postal_code}<br />{location.country}</address>
                   {location.phone && <a href={`tel:${location.phone}`}>{location.phone}</a>}
@@ -53,7 +46,6 @@ export default async function LocationsPage() {
               : <ContentNotice message="No locations have been published." />}
         </div>
       </section>
-      <StudioAmenities />
     </>
   );
 }
